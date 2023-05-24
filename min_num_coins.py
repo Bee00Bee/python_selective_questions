@@ -1,21 +1,25 @@
-'''You are given N pairs of numbers. In every pair, the first number is always smaller than the second number. 
-A pair (c, d) can follow another pair (a, b) if b < c. Chain of pairs can be formed in this fashion. 
-You have to find the longest chain which can be formed from the given set of pairs. '''
+from itertools import combinations_with_replacement
 
-if __name__=='__main__':
-    
-    lst = [(5, 24) , (70, 60) , (15, 28) , (20, 40) , (100, 90)]
-    lst2=[]
-    count = 0
-    
+N = 43
+lst=[1, 2, 5, 10, 20, 50, 100, 200, 500, 2000]
+
+big_lst = []
+
+for i in range(len(lst)):
+    big_lst.append(list(combinations_with_replacement(lst, i)))
+
+selected_lst = []
+
+for lst in big_lst:
     for ele in lst:
-        if ele[0] < ele[1]:
-            count += 1
+        if ele !=() and sum(ele)==N:
+            selected_lst.append((ele))
 
-        if ele[0] > ele[1]:
-            lst2.append(count)
-            count = 0
+min_length = len(selected_lst[0])
+candidate=selected_lst[0]
 
-    lst2.append(count)
-
-    print(max(lst2))
+for ele in selected_lst:
+    length = len(ele)
+    if length < min_length:
+        min_length = length
+        candidate=ele 
